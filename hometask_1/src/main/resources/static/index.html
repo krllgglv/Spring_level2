@@ -90,7 +90,7 @@
             <td>Цена</td>
         </tr>
         <tbody>
-        <tr ng-repeat="item in Cart.items">
+        <tr ng-repeat="item in cart.items">
             <td>{{item.productTitle}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.pricePerProduct + ' x ' + item.quantity + ' = ' + item.price}}</td>
@@ -98,17 +98,37 @@
         <tr>
             <td></td>
             <td>Итого</td>
-            <td>{{Cart.totalPrice}}</td>
+            <td>{{cart.totalPrice}}</td>
         </tr>
         </tbody>
     </table>
     <p>
         <button class="btn btn-secondary" ng-click="clearCart()">Очистить корзину</button>
-        <button class="btn btn-primary" ng-click="createOrder()">Оформить заказ</button>
     </p>
-    <p>
-        <button class="btn btn-danger" ng-click="showCurrentUserInfo()">Обо мне</button>
-    </p>
+
+
+    <form ng-submit="createOrder()">
+        <div class="form-group">
+            <label for="exampleInputEmail1">Адрес доставки</label>
+            <input type="text" class="form-control" id="exampleInputEmail1"
+                   aria-describedby="emailHelp"
+                   ng-model="orderAddress"
+                   placeholder="Введите адрес доставки">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Контактный телефон</label>
+            <input type="text" class="form-control"
+                   id="exampleInputPassword1"
+                   ng-model="orderPhone"
+                   placeholder="Укажите номер телефона">
+        </div>
+        <p></p>
+        <div>
+            <button type="submit" class="btn btn-primary">Оформить заказ</button>
+        </div>
+    </form>
+    <p></p>
+
 </div>
 
 </body>

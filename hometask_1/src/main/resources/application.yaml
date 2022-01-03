@@ -1,5 +1,5 @@
 server:
-  port: 8189
+  port: 8080
   servlet:
     context-path: /app
 spring:
@@ -18,3 +18,5 @@ spring:
       enabled: true
       settings:
         web-allow-others: false
+  jackson:
+    serialization.FA

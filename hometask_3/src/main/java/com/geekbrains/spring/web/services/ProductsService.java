@@ -1,6 +1,7 @@
 package com.geekbrains.spring.web.services;
 
 import com.geekbrains.spring.web.dto.ProductDto;
+import com.geekbrains.spring.web.entities.Category;
 import com.geekbrains.spring.web.entities.Product;
 import com.geekbrains.spring.web.exceptions.ResourceNotFoundException;
 import com.geekbrains.spring.web.repositories.ProductsRepository;
@@ -18,8 +19,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductsService {
     private final ProductsRepository productsRepository;
+    private final CategoriesService categoriesService;
 
-    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer page) {
+    @Transactional
+    public Page<Product> findAll(Integer minPrice, Integer maxPrice, String partTitle, Integer categoryId, Integer page) {
         Specification<Product> spec = Specification.where(null);
         if (minPrice != null) {
             spec = spec.and(ProductsSpecifications.priceGreaterOrEqualsThan(minPrice));
@@ -30,6 +33,12 @@ public class ProductsService {
         if (partTitle != null) {
             spec = spec.and(ProductsSpecifications.titleLike(partTitle));
         }
+        if (categoryId != null) {
+            Category category = categoriesService.findOneById(categoryId).orElseThrow(() -> new ResourceNotFoundException("No such category"));
+            spec = spec.and(ProductsSpecifications.categoryEquals(category));
+        }
+
+
 
         return productsRepository.findAll(spec, PageRequest.of(page - 1, 8));
     }

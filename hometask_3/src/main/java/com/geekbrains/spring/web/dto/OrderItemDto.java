@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class OrderItemDto {
     private Long productId;
     private String productTitle;
+    private String categoryTitle;
     private int quantity;
     private int pricePerProduct;
     private int price;
@@ -18,6 +19,7 @@ public class OrderItemDto {
     public OrderItemDto(Product product) {
         this.productId = product.getId();
         this.productTitle = product.getTitle();
+        this.categoryTitle = product.getCategory().getTitle();
         this.quantity = 1;
         this.pricePerProduct = product.getPrice();
         this.price = product.getPrice();

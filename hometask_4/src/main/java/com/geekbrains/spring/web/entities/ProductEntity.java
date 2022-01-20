@@ -1,6 +1,5 @@
 package com.geekbrains.spring.web.entities;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "products")
 @Data
 @NoArgsConstructor
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -27,7 +26,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private CategoryEntity category;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -39,7 +38,7 @@ public class Product {
 
 
 
-    public Product(Long id, String title, Integer price) {
+    public ProductEntity(Long id, String title, Integer price) {
         this.id = id;
         this.title = title;
         this.price = price;

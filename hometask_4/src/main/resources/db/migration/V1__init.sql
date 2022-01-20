@@ -23,16 +23,8 @@ create table products
 
 insert into products (title, price, category_id)
 values ('Молоко', 100, 1),
-       ('Хлеб', 80, 1),
-       ('Сыр', 90, 1),
-       ('Подгузники1', 190, 2),
-       ('Подгузники2', 201, 2),
        ('Подгузники2', 202, 2),
-       ('Колесо1', 1990, 3),
-       ('Cheese6', 90, 1),
-       ('Cheese7', 90, 1),
-       ('Cheese8', 90, 1),
-       ('Cheese9', 90, 1);
+       ('Колесо1', 1990, 3);
 
 create table users
 (

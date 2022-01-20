@@ -1,6 +1,6 @@
 package com.geekbrains.spring.web.dto;
 
-import com.geekbrains.spring.web.entities.Product;
+import com.geekbrains.spring.web.entities.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ public class OrderItemDto {
     private int pricePerProduct;
     private int price;
 
-    public OrderItemDto(Product product) {
+    public OrderItemDto(ProductEntity product) {
         this.productId = product.getId();
         this.productTitle = product.getTitle();
         this.categoryTitle = product.getCategory().getTitle();

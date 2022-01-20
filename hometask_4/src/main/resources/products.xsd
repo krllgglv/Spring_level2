@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:pr="http://ru.kgogolev.com/spring/ws/products"
+        xmlns:cat="http://ru.kgogolev.com/spring/ws/categories"
+        targetNamespace="http://ru.kgogolev.com/spring/ws/products" elementFormDefault="qualified">
+
+    <xs:import schemaLocation="categories.xsd" namespace="http://ru.kgogolev.com/spring/ws/categories"/>
+
+    <xs:element name="GetProductByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetProductByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="product" type="pr:product"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="GetAllProductsRequest">
+        <xs:complexType/>
+    </xs:element>
+    <xs:element name="GetAllProductsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="products" maxOccurs="unbounded" type="pr:product"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="product">
+        <xs:sequence>
+            <xs:element name="id" type="xs:long"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="price" type="xs:int"/>
+            <xs:element name="category"  type="cat:category"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

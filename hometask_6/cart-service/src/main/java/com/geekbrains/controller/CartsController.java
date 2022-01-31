@@ -1,6 +1,6 @@
 package com.geekbrains.controller;
 
-import com.geekbrains.dto.Cart;
+import com.geekbrains.spring.web.api.dto.Cart;
 import com.geekbrains.spring.web.api.dto.ProductDto;
 import com.geekbrains.spring.web.api.dto.StringResponse;
 
@@ -22,7 +22,10 @@ public class CartsController {
     public Cart getCart(@RequestHeader(required = false) String username, @PathVariable String uuid) {
         return cartService.getCurrentCart(getCurrentCartUuid(username, uuid));
     }
-
+    @GetMapping("/ms/{username}")
+    public Cart getCart(@PathVariable String username) {
+        return cartService.getCurrentCart(getCurrentCartUuid(username));
+    }
     @GetMapping("/generate")
     public StringResponse getCart() {
         return new StringResponse(cartService.generateCartUuid());
@@ -30,7 +33,8 @@ public class CartsController {
 
     @GetMapping("/{uuid}/add/{productId}")
     public void add(@RequestHeader(required = false) String username, @PathVariable String uuid, @PathVariable Long productId) {
-        ProductDto product = restTemplate.getForObject("http://core-service/api/v1/products/" + productId, ProductDto.class);
+        String address = "http://core-service/web-market-core/api/v1/products/" + productId;
+        ProductDto product = restTemplate.getForObject(address, ProductDto.class);
         cartService.addToCart(getCurrentCartUuid(username, uuid), product);
     }
 
@@ -49,6 +53,11 @@ public class CartsController {
         cartService.clearCart(getCurrentCartUuid(username, uuid));
     }
 
+    @GetMapping("/ms/{username}/clear")
+    public void clear(@PathVariable String username) {
+        cartService.clearCart(getCurrentCartUuid(username));
+    }
+
     @GetMapping("/{uuid}/merge")
     public void merge(@RequestHeader(required = false) String username, @PathVariable String uuid) {
         cartService.merge(
@@ -62,5 +71,11 @@ public class CartsController {
             return cartService.getCartUuidFromSuffix(username);
         }
         return cartService.getCartUuidFromSuffix(uuid);
+    }
+
+    private String getCurrentCartUuid(String username) {
+
+            return cartService.getCartUuidFromSuffix(username);
+
     }
 }

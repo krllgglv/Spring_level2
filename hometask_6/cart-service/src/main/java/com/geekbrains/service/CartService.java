@@ -1,6 +1,6 @@
 package com.geekbrains.service;
 
-import com.geekbrains.dto.Cart;
+import com.geekbrains.spring.web.api.dto.Cart;
 
 import com.geekbrains.spring.web.api.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +38,6 @@ public class CartService {
         execute(cartKey, c -> {
             c.add(product);
         });
-        // TODO: 31.01.2022 добавление в корзину
     }
 
     public void clearCart(String cartKey) {

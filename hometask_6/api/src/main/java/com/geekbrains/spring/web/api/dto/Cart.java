@@ -1,7 +1,5 @@
-package com.geekbrains.dto;
+package com.geekbrains.spring.web.api.dto;
 
-import com.geekbrains.spring.web.api.dto.OrderItemDto;
-import com.geekbrains.spring.web.api.dto.ProductDto;
 import lombok.Data;
 
 import java.util.ArrayList;

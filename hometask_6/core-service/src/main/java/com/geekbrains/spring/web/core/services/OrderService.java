@@ -1,5 +1,6 @@
 package com.geekbrains.spring.web.core.services;
 
+import com.geekbrains.spring.web.api.dto.Cart;
 import com.geekbrains.spring.web.api.exceptions.ResourceNotFoundException;
 //import com.geekbrains.spring.web.api.dto.Cart;
 import com.geekbrains.spring.web.core.dto.OrderDetailsDto;
@@ -17,34 +18,29 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrdersRepository ordersRepository;
-//    private final CartService cartService;
     private final ProductsService productsService;
 
     @Transactional
-    public void createOrder(String username, OrderDetailsDto orderDetailsDto) {
-//        String cartKey = cartService.getCartUuidFromSuffix(username);
-//        Cart currentCart = cartService.getCurrentCart(cartKey);
-//        Order order = new Order();
-//        order.setAddress(orderDetailsDto.getAddress());
-//        order.setPhone(orderDetailsDto.getPhone());
-//        order.setUsername(username);
-//        order.setTotalPrice(currentCart.getTotalPrice());
-//        List<OrderItem> items = currentCart.getItems().stream()
-//                .map(o -> {
-//                    OrderItem item = new OrderItem();
-//                    item.setOrder(order);
-//                    item.setQuantity(o.getQuantity());
-//                    item.setPricePerProduct(o.getPricePerProduct());
-//                    item.setPrice(o.getPrice());
-//                    item.setProduct(productsService.findById(o.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not found")));
-//                    return item;
-//                }).collect(Collectors.toList());
-//        order.setItems(items);
-//        ordersRepository.save(order);
-//        cartService.clearCart(cartKey);
-//    }
-        // TODO: 31.01.2022 добавить получение корзины 
+    public void   createOrder(Cart currentCart, String username, OrderDetailsDto orderDetailsDto) {
+        Order order = new Order();
+        order.setAddress(orderDetailsDto.getAddress());
+        order.setPhone(orderDetailsDto.getPhone());
+        order.setUsername(username);
+        order.setTotalPrice(currentCart.getTotalPrice());
+        List<OrderItem> items = currentCart.getItems().stream()
+                .map(o -> {
+                    OrderItem item = new OrderItem();
+                    item.setOrder(order);
+                    item.setQuantity(o.getQuantity());
+                    item.setPricePerProduct(o.getPricePerProduct());
+                    item.setPrice(o.getPrice());
+                    item.setProduct(productsService.findById(o.getProductId()).orElseThrow(() -> new ResourceNotFoundException("Product not found")));
+                    return item;
+                }).collect(Collectors.toList());
+        order.setItems(items);
+        ordersRepository.save(order);
     }
+
 
     public List<Order> findOrdersByUsername(String username) {
         return ordersRepository.findAllByUsername(username);

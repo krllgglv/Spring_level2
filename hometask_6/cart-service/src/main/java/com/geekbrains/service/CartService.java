@@ -2,6 +2,7 @@ package com.geekbrains.service;
 
 import com.geekbrains.dto.Cart;
 
+import com.geekbrains.spring.web.api.dto.ProductDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,11 +34,10 @@ public class CartService {
         return (Cart) redisTemplate.opsForValue().get(cartKey);
     }
 
-    public void addToCart(String cartKey, Long productId) {
-//        Product product = productsService.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Невозможно добавить продукт в корзину. Продукт не найдет, id: " + productId));
-//        execute(cartKey, c -> {
-//            c.add(product);
-//        });
+    public void addToCart(String cartKey, ProductDto product) {
+        execute(cartKey, c -> {
+            c.add(product);
+        });
         // TODO: 31.01.2022 добавление в корзину
     }
 

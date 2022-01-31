@@ -1,9 +1,9 @@
 server:
-  port: 0
+  port: 8189
+  servlet:
+    context-path: /web-market-core
 
-utils:
-  cart:
-    prefix: SPRING_WEB_
+
 spring:
   application:
     name: core-service

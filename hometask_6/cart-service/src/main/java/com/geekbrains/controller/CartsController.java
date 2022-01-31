@@ -1,6 +1,7 @@
 package com.geekbrains.controller;
 
 import com.geekbrains.dto.Cart;
+import com.geekbrains.spring.web.api.dto.ProductDto;
 import com.geekbrains.spring.web.api.dto.StringResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,8 @@ public class CartsController {
 
     @GetMapping("/{uuid}/add/{productId}")
     public void add(@RequestHeader(required = false) String username, @PathVariable String uuid, @PathVariable Long productId) {
-//        restTemplate.getForObject()
-        // TODO: 31.01.2022 добавить получение продукта из продуктового сервиса
-        cartService.addToCart(getCurrentCartUuid(username, uuid), productId);
+        ProductDto product = restTemplate.getForObject("http://core-service/api/v1/products/" + productId, ProductDto.class);
+        cartService.addToCart(getCurrentCartUuid(username, uuid), product);
     }
 
     @GetMapping("/{uuid}/decrement/{productId}")

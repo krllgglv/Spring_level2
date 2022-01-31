@@ -1,8 +1,10 @@
 server:
-  port: 0
+  port: 8888
+  servlet:
+    context-path: /web-market-carts
 spring:
   application:
-    name: core-service
+    name: cart-service
 eureka:
   instance:
     hostname: localhost
@@ -10,3 +12,6 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
       fetchRegistry: false
+utils:
+  cart:
+    prefix: SPRING_WEB_

@@ -24,3 +24,5 @@ spring:
 integrations:
   cart-service:
     url: http://localhost:5555/cart
+  stat-service:
+    url: http://localhost:5555/stat

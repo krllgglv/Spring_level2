@@ -6,6 +6,7 @@ import com.geekbrains.spring.web.api.core.OrderDetailsDto;
 import com.geekbrains.spring.web.core.entities.Order;
 import com.geekbrains.spring.web.core.entities.OrderItem;
 import com.geekbrains.spring.web.core.integrations.CartServiceIntegration;
+import com.geekbrains.spring.web.core.integrations.StatServiceIntegration;
 import com.geekbrains.spring.web.core.repositories.OrdersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class OrderService {
     private final OrdersRepository ordersRepository;
     private final CartServiceIntegration cartServiceIntegration;
+    private final StatServiceIntegration statServiceIntegration;
     private final ProductsService productsService;
 
     @Transactional
@@ -40,6 +42,7 @@ public class OrderService {
                     return item;
                 }).collect(Collectors.toList());
         order.setItems(items);
+        statServiceIntegration.addProductsToStatistic(currentCart.getItems());
         ordersRepository.save(order);
         cartServiceIntegration.clearUserCart(username);
     }
